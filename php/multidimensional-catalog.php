@@ -1,4 +1,5 @@
 <?php
+include './my-functions.php';
 $products = [
     "iPhone" => [
         "name" => 'iPhone',
@@ -32,7 +33,7 @@ foreach($products as $key => $product){
 <div>
     <h3> <?= $products["iPhone"]['name'] ?></h3>
     <p>
-        Prix : <?= $products["iPhone"]['price']   ?>Cents
+        Prix : <?php formatPrice($products["iPhone"]['price'])  ?>
     </p>
     <p>
         Poids : <?= $products["iPhone"]['weight']  ?>g
@@ -45,7 +46,7 @@ foreach($products as $key => $product){
 <div>
     <h3> <?= $products["iPad"]['name'] ?></h3>
     <p>
-        Prix : <?= $products["iPad"]['price'] ?>Cents
+        Prix : <?php formatPrice($products["iPad"]['price']) ?>
     </p>
     <p>
         Poids : <?= $products["iPad"]['weight'] ?>g
@@ -58,7 +59,7 @@ foreach($products as $key => $product){
 <div>
     <h3> <?= $products["iMac"]['name'] ?></h3>
     <p>
-        Prix : <?= $products["iMac"]['price']   ?> Cents
+        Prix : <?php formatPrice($products["iMac"]['price'])   ?> 
     </p>
     <p>
         Poids : <?= $products["iMac"]['weight']   ?>g
