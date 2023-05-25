@@ -25,7 +25,7 @@ $products = [
 
 foreach($products as $key => $product){
     foreach ($product as $key => $val)
-    echo "$product[$key] ";
+    echo "$key : $val ";
 }
 ?>
 
