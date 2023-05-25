@@ -1,4 +1,4 @@
-<php? 
+<?php 
 $name = "test";
 $price = "22$";
 $path = "test.com";
