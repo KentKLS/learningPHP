@@ -24,9 +24,9 @@ $products = [
     ],
 ];
 
-foreach($products as $key => $product){
+foreach ($products as $key => $product) {
     foreach ($product as $key => $val)
-    echo "$key : $val ";
+        echo "$key : $val ";
 }
 ?>
 
@@ -39,7 +39,9 @@ foreach($products as $key => $product){
         Poids : <?= $products["iPhone"]['weight']  ?>g
     </p>
     <p>
-        Discount : <?= $products["iPhone"]['discount']  ?>%
+        Price after <?= $products["iPhone"]['discount']   ?>% discount : <?php
+                                                                            $discountedPrice =  discountedPrice($products["iPhone"]['price'], $products["iPhone"]['discount']);
+                                                                            formatPrice($discountedPrice) ?>
     </p>
     <img src='<?= $products["iPhone"]['picture_url'] ?>'>
 </div>
@@ -52,21 +54,24 @@ foreach($products as $key => $product){
         Poids : <?= $products["iPad"]['weight'] ?>g
     </p>
     <p>
-        Discount : <?= $products["iPad"]['discount'] ?>%
+        Price after <?= $products["iPad"]['discount']   ?>% discount : <?php
+                                                                        $discountedPrice =  discountedPrice($products["iPad"]['price'], $products["iPad"]['discount']);
+                                                                        formatPrice($discountedPrice) ?>
     </p>
     <img src='<?= $products["iPad"]['picture_url'] ?>'>
 </div>
 <div>
     <h3> <?= $products["iMac"]['name'] ?></h3>
     <p>
-        Prix : <?php formatPrice($products["iMac"]['price'])   ?> 
+        Prix : <?php formatPrice($products["iMac"]['price'])   ?>
     </p>
     <p>
         Poids : <?= $products["iMac"]['weight']   ?>g
     </p>
     <p>
-        Discount : <?= $products["iMac"]['discount']   ?>%
+        Price after <?= $products["iMac"]['discount']   ?>% discount : <?php
+                                                                        $discountedPrice =  discountedPrice($products["iMac"]['price'], $products["iMac"]['discount']);
+                                                                        formatPrice($discountedPrice) ?>
     </p>
     <img src='<?= $products["iMac"]['picture_url']  ?>'>
 </div>
-
