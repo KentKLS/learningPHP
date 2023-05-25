@@ -22,12 +22,17 @@ $products = [
         "picture_url" => "https://www.apple.com/v/macbook-pro-14-and-16/e/images/overview/performance/choose_size__b11uc4j8f36u_large.jpg"
     ],
 ];
+
+foreach($products as $key => $product){
+    foreach ($product as $key => $val)
+    echo "$product[$key] ";
+}
 ?>
 
 <div>
-<h3> <?= $products["iPhone"]['name'] ?></h3>
+    <h3> <?= $products["iPhone"]['name'] ?></h3>
     <p>
-        Prix : <?=$products["iPhone"]['price']   ?>Cents
+        Prix : <?= $products["iPhone"]['price']   ?>Cents
     </p>
     <p>
         Poids : <?= $products["iPhone"]['weight']  ?>g
@@ -35,10 +40,10 @@ $products = [
     <p>
         Discount : <?= $products["iPhone"]['discount']  ?>%
     </p>
-    <img src='<?=$products["iPhone"]['picture_url']?>'>
+    <img src='<?= $products["iPhone"]['picture_url'] ?>'>
 </div>
 <div>
-<h3> <?= $products["iPad"]['name'] ?></h3>
+    <h3> <?= $products["iPad"]['name'] ?></h3>
     <p>
         Prix : <?= $products["iPad"]['price'] ?>Cents
     </p>
@@ -51,15 +56,16 @@ $products = [
     <img src='<?= $products["iPad"]['picture_url'] ?>'>
 </div>
 <div>
-<h3> <?= $products["iMac"]['name'] ?></h3>
+    <h3> <?= $products["iMac"]['name'] ?></h3>
     <p>
         Prix : <?= $products["iMac"]['price']   ?> Cents
     </p>
     <p>
-        Poids : <?=$products["iMac"]['weight']   ?>g
+        Poids : <?= $products["iMac"]['weight']   ?>g
     </p>
     <p>
-        Discount : <?=$products["iMac"]['discount']   ?>%
+        Discount : <?= $products["iMac"]['discount']   ?>%
     </p>
     <img src='<?= $products["iMac"]['picture_url']  ?>'>
 </div>
+
