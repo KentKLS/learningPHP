@@ -44,6 +44,7 @@ $products = [
     <form>
         <label for="iPhoneOrderedNumber">Quantité :</label>
         <input type="number" name="iPhoneOrderedNumber">
+        <button class ="buyButton">Achetez cet article</button>
     </form>
     <img src='<?= $products["iPhone"]['picture_url'] ?>'>
    
@@ -64,6 +65,7 @@ $products = [
     <form action="" method="GET">
         <label for="iPadOrderedNumber">Quantité :</label>
         <input type="number" name="iPadOrderedNumber">
+        <button class ="buyButton">Achetez cet article</button>
     </form>
     <img src='<?= $products["iPad"]['picture_url'] ?>'>
     
@@ -84,6 +86,7 @@ $products = [
     <form>
         <label for="iMacOrderedNumber">Quantité :</label>
         <input type="number" name="iMacOrderedNumber">
+        <button class ="buyButton">Achetez cet article</button>
     </form>
     <img src='<?= $products["iMac"]['picture_url']  ?>'>
 </div>
