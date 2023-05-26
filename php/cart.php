@@ -1,5 +1,6 @@
 <?php
 include "./item-list.php";
+getProduct();
 ?>
 <div class="tableContainer">
     <table>
