@@ -14,7 +14,7 @@
     <nav class="headerNav">
         <div class="leftPart">
             <div class="logo">
-                <a title="QS Shop" href="/index.html">
+                <a title="QS Shop" href="#">
                     <svg width="340" height="322" viewBox="0 0 340 322" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1_2)">
                         <path d="M282.5 139.56C291.913 139.52 301.33 139.503 310.75 139.51C311.743 139.51 311.973 139.44 311.44 139.3C311.327 139.267 311.203 139.25 311.07 139.25C272.57 139.217 234.07 139.237 195.57 139.31C195.23 139.31 195.223 139.313 195.55 139.32C224.537 139.58 253.52 139.66 282.5 139.56Z" stroke="white" stroke-opacity="0.992" stroke-width="2"/>
@@ -36,12 +36,13 @@
         <div class="rightPart">
             <ul>
                 <li>
-                    <a href="">Our Products</a>
+                    <a href="#">Our Products</a>
                 </li>
                 <li>
-                    <a href=""> My Account </a>
+                    <a href="#"> My Account </a>
                 </li>
                 <li>
+                    <a href="#">
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="64.000000pt" height="64.000000pt"
                         viewBox="0 0 64.000000 64.000000" preserveAspectRatio="xMidYMid meet">
 
@@ -61,6 +62,7 @@ l-236 2 0 25 c0 22 -4 25 -40 25 -22 0 -40 -4 -40 -10z" />
 -20 7 -20 15 0 8 9 15 20 15 11 0 20 -7 20 -15z" />
                         </g>
                     </svg>
+                    </a>
                 </li>
             </ul>
         </div>
