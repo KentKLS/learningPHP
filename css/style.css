@@ -65,6 +65,7 @@ ul {
 }
 ul li a {
     text-decoration: none;
+    color: #1e1e24;
 }
 ul li svg {
     height: 40px;
@@ -173,4 +174,8 @@ footer ul li {
 
 .tableContainer{
     margin: 10px 0 10px;
+}
+
+.numberInput{
+    width: 2.6rem;
 }

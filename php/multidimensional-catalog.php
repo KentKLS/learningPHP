@@ -29,7 +29,7 @@ $products = getProducts();
 
         <label for="numberOrdered">Quantité :</label>
         <input type="hidden" name="product" value="<?php echo $products[$product]["name"]?>">
-        <input type="number" min="1" name="numberOrdered">
+        <input type="number" min="1"  name="numberOrdered">
         <button class="buyButton">Achetez cet article</button>
         
     </form>
