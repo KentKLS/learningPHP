@@ -74,3 +74,9 @@ a {
 .footerNav>a>i:hover {
     color: #2D3945;
 }
+
+.contentIsCentered{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
