@@ -1,13 +1,5 @@
 <footer>
-        <div class="mailFormContainer">
-        <p>Inscrivez-vous pour recevoir des offres spéciales et des mises à jour</p>
-
-        <form action="POST">
-            
-            <input class="footerFormInput" name="mail" type="mail" placeholder="Entrez votre addresse mail">
-            <button class="footerFormButton">Inscrivez-vous</button>
-        </form>
-    </div>
+      
       <div class="footerNavSite">
         <ul>
             <li>

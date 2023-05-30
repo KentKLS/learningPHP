@@ -1,4 +1,5 @@
 <?php
+include "./header.php";
 include './my-functions.php';
 include "./item-list.php";
 $products = getProducts();
@@ -36,3 +37,5 @@ $products = getProducts();
 
 </div>
 <?php endforeach ?>
+
+<?php include "./footer.php"; ?>

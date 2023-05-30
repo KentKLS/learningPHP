@@ -1,4 +1,5 @@
 <?php
+include "./header.php";
 include "./item-list.php";
 include "./my-functions.php";
 
@@ -6,7 +7,7 @@ $product = getProduct($_POST["product"]);
 $numberOrdered = $_POST["numberOrdered"];
 ?>
 
-<div class="mainContainer contentIsCentered">
+<div class="mainContainer contentIsCentered isFullPage">
 
     <?php if ($_POST["numberOrdered"] != null) : ?>
 
@@ -79,3 +80,6 @@ $numberOrdered = $_POST["numberOrdered"];
 </table>
 <?php endif ?>
 </div>
+
+<?php
+include "./footer.php"; ?>
