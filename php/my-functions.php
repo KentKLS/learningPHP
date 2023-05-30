@@ -9,7 +9,7 @@ function formatPrice($price)
 
 function priceExcludingVAT($priceTTC, $VAT = 20)
 {
-    
+
     $priceHT = (100 * $priceTTC) / (100 + $VAT);
     return $priceHT;
 }
@@ -21,5 +21,27 @@ function discountedPrice($price, $discount)
         return $discountedPrice;
     }
 
-return $price;
+    return $price;
+}
+
+function priceTransporter($transporter, $weight, $price)
+{
+    if ($transporter == "laPoste") {
+        if ($weight < 500) {
+            $transporterPrice = 500;
+        } elseif ($weight > 500 && $weight < 2000) {
+            $transporterPrice = $price / 10;
+        } else {
+            $transporterPrice = 0;
+        }
+    } else if ($transporter == "chronoPost") {
+        if ($weight < 500) {
+            $transporterPrice = 499;
+        } elseif ($weight > 500 && $weight < 2000) {
+            $transporterPrice = $price / 7;
+        } else {
+            $transporterPrice = 1;
+        }
+    }
+    return $transporterPrice;
 }
