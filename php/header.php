@@ -36,7 +36,7 @@
         <div class="rightPart">
             <ul>
                 <li>
-                    <a href="#">Our Products</a>
+                    <a href="./multidimensional-catalog.php">Our Products</a>
                 </li>
                 <li>
                     <a href="#"> My Account </a>
