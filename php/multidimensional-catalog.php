@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "./header.php";
 include './my-functions.php';
 include "./item-list.php";
