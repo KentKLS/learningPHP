@@ -74,7 +74,6 @@ function myDump($variable)
 function emptyCart($session){
     foreach ($session as $keyArray => $array){
        $session[$keyArray] = 0;       
-    }
-    
+    }    
     return $session;
 }

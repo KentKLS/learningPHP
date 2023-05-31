@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "./header.php";
 include './my-functions.php';
 include "./item-list.php";
@@ -28,7 +29,7 @@ $products = getProducts();
                     </p>
                     <label for="numberOrdered[]">Quantité :</label>
                     <input type="hidden" name="product[]" value="<?php echo $products[$product]["name"] ?>">
-                    <input type="number" class="numberInput" value="0" min="0" max="99" name="numberOrdered[]">
+                    <input type="number" class="numberInput" value="<?=$_SESSION["numberOrdered"][$product] ??  0 ?>" min="0" max="99" name="numberOrdered[<?= $product ?>]">
                 </div>
 
             <?php endforeach ?>
