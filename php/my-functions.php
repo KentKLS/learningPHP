@@ -70,3 +70,11 @@ function myDump($variable)
     print_r($variable);
     echo '</pre>';
 }
+
+function emptyCart($session){
+    foreach ($session as $keyArray => $array){
+       $session[$keyArray] = 0;       
+    }
+    
+    return $session;
+}
