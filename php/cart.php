@@ -1,21 +1,24 @@
 <?php
+session_start();
 include "./header.php";
 include "./item-list.php";
 include "./my-functions.php";
 
-// $product = getProduct($_POST["product"]);
 
+if (isset($_POST["product"])&& isset($_POST["numberOrdered"])){
+$_SESSION["product"] = $_POST["product"];
+$_SESSION["numberOrdered"] = $_POST["numberOrdered"];
+}
 
-
-$productName = $_POST["product"];
-$numberOrdered = $_POST["numberOrdered"];
+$productName =$_SESSION["product"];
+$numberOrdered = $_SESSION["numberOrdered"];
 $totalPrice = 0;
 
 
 
 $productsArray = createProductsArray($productName, $numberOrdered);
 
-myDump($_POST);
+
 
 
 ?>
@@ -83,16 +86,14 @@ myDump($_POST);
             </table>
             <button>Mettre à jour tableau</button>
 
-        </form>
+       
     </div>
 
 
 
 
 
-    <form action="" method="POST">
-        <input type="hidden" name="product" value="<?php echo $productName ?>">
-        <input type="hidden" name="numberOrdered" value="<?php echo $numberOrdered ?>">
+ 
         <select name="transporter">
             <option value="laPoste">La Poste</option>
             <option value="chronoPost">ChronoPost</option>
@@ -104,13 +105,13 @@ myDump($_POST);
             <tr>
 
                 <td>TRANSPORT</td>
-                <td><?php echo formatPrice(priceTransporter($_POST["transporter"], $product["weight"] * $numberOrdered, $product["price"])); ?></td>
+                <td><?php echo formatPrice(priceTransporter($_POST["transporter"], $array["product"]["weight"] * $array["number"], $array["product"]["price"])); ?></td>
 
             </tr>
             <tr>
 
                 <td>Total TTC</td>
-                <td><?php echo formatPrice(priceTransporter($_POST["transporter"], $product["weight"] * $numberOrdered, $product["price"]) + $product["price"])  ?></td>
+                <td><?php echo formatPrice(priceTransporter($_POST["transporter"], $array["product"]["weight"]* $array["number"], $array["product"]["price"]) + $array["product"]["price"])  ?></td>
 
             </tr>
 
