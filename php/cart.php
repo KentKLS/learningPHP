@@ -3,67 +3,95 @@ include "./header.php";
 include "./item-list.php";
 include "./my-functions.php";
 
-$product = getProduct($_POST["product"]);
+// $product = getProduct($_POST["product"]);
+
+
+
+$productName = $_POST["product"];
 $numberOrdered = $_POST["numberOrdered"];
+$totalPrice = 0;
+
+
+
+$productsArray = createProductsArray($productName, $numberOrdered);
+
+myDump($_POST);
+
+
 ?>
 
 <div class="mainContainer contentIsCentered isFullPage">
 
-    <?php if ($_POST["numberOrdered"] != null) : ?>
+    <?php
 
-        <div class="tableContainer">
-            <form action="" method="POST">
-                <table>
-                    <tr>
-                        <th>Produit</th>
-                        <th>Prix Unitaire</th>
-                        <th>Quantité</th>
-                        <th>Total</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td><?php echo $product["name"] ?></td>
-                        <td> <?php echo formatPrice($product["price"]) ?></td>
-                        <td>
-                            <input class="numberInput" max="99" type="number" name="numberOrdered" min="1" value="<?php echo $numberOrdered ?>">
-                        </td>
-                        <td><?php echo formatPrice($product["price"] * $numberOrdered) ?></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Total HT</td>
-                        <td> <?php echo formatPrice(priceExcludingVAT($product["price"])) ?> </td>
+    ?>
 
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>TVA</td>
-                        <td> <?php echo $product["VAT"] ?>%</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Total TTC</td>
-                        <td><?php echo formatPrice($product["price"]) ?></td>
-                    </tr>
 
-                </table>
-                <button>Mettre à jour tableau</button>
-                <input type="hidden" name="product" value="<?php echo $product["name"] ?>">
 
-            </form>
-        </div>
-    <?php else : ?>
-        <div>
-            La quantité choisis n'est pas valide
-        </div>
+    <div class="tableContainer">
+        <form action="" method="POST">
+            <table>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix Unitaire</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+                <?php foreach ($productsArray as $arrayKey => $array) :
+                        if ($array["number"] != 0) :
+                            $totalPrice = $totalPrice + ($array["product"]["price"] * $array["number"]);
+                ?>
+                        <tr>
+                            <td><?php echo $array["product"]["name"] ?></td>
+                            <td> <?php echo formatPrice($array["product"]["price"]) ?></td>
+                            <td>
+                                <input class="numberInput" max="99" type="number" name="numberOrdered[]" min="0" value="<?php echo $array["number"] ?>">
+                            </td>
+                            <td><?php echo formatPrice($array["product"]["price"] * $array["number"]) ?></td>
+                            <td>                                
+                                <input type="hidden" name="product[]" value="<?php echo $array["product"]["name"]?>">                               
 
-    <?php endif; ?>
+                            </td>
+                        </tr>
+                        
+                <?php
+                        endif;
+                    endforeach;
+                ?>
+               
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total HT</td>
+                    <td> <?php echo formatPrice(priceExcludingVAT($totalPrice)) ?> </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>TVA</td>
+                    <td> <?php echo $array["product"]["VAT"] ?>%</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total TTC</td>
+                    <td><?php echo formatPrice($totalPrice) ?></td>
+                </tr>
+
+            </table>
+            <button>Mettre à jour tableau</button>
+
+        </form>
+    </div>
+
+
+
+
 
     <form action="" method="POST">
-        <input type="hidden" name="product" value="<?php echo $product["name"] ?>">
+        <input type="hidden" name="product" value="<?php echo $productName ?>">
         <input type="hidden" name="numberOrdered" value="<?php echo $numberOrdered ?>">
         <select name="transporter">
             <option value="laPoste">La Poste</option>
@@ -87,7 +115,8 @@ $numberOrdered = $_POST["numberOrdered"];
             </tr>
 
         </table>
-    <?php endif ?>
+    <?php endif;
+    ?>
 </div>
 
 <?php include "./footer.php"; ?>
