@@ -45,3 +45,28 @@ function priceTransporter($transporter, $weight, $price)
     }
     return $transporterPrice;
 }
+
+
+function createProductsArray($productName, $numberOrdered)
+{
+    $i = 0;
+    foreach ($productName as $name) {
+        $productsArray[$i]["product"] = getProduct($name);
+        $i++;
+    }
+
+    $i = 0;
+    foreach ($numberOrdered as $number) {
+        $productsArray[$i]["number"] = $number;
+        $i++;
+    }
+    return $productsArray;
+}
+
+
+function myDump($variable)
+{
+    echo '<pre>';
+    print_r($variable);
+    echo '</pre>';
+}
