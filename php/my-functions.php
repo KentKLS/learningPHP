@@ -1,5 +1,5 @@
 <?php
-
+include "./database.php";
 
 function formatPrice($price)
 {
@@ -47,17 +47,24 @@ function priceTransporter($transporter, $weight, $price)
 }
 
 
-function createProductsArray($productName, $numberOrdered)
+function createProductsArray($productName, $numberOrdered, $db)
 {
+    $productList = getProductList($db);
     $i = 0;
     foreach ($productName as $name) {
-        $productsArray[$i]["product"] = getProduct($name);
+        $productsArray[$i]["name"] = $productList[$i]["product_name"];
+        $productsArray[$i]["price"] = $productList[$i]["product_price"];
+        $productsArray[$i]["productID"] = $productList[$i]["product_id"];
+        $productsArray[$i]["weight"] = $productList[$i]["product_weight"];
+
+
+
         $i++;
     }
 
     $i = 0;
     foreach ($numberOrdered as $number) {
-        $productsArray[$i]["number"] = $number;
+        $productsArray[$i]["numberOrdered"] = $number;
         $i++;
     }
     return $productsArray;
@@ -71,9 +78,21 @@ function myDump($variable)
     echo '</pre>';
 }
 
-function emptyCart($session){
-    foreach ($session as $keyArray => $array){
-       $session[$keyArray] = 0;       
-    }    
+function emptyCart($session)
+{
+    foreach ($session as $keyArray => $array) {
+        $session[$keyArray] = 0;
+    }
     return $session;
+}
+
+function calculTotalPrice($productsArray){
+    $totalPrice = 0;
+    foreach ($productsArray as $product){
+        if ($product["numberOrdered"] != 0){
+            $totalPrice = $totalPrice + ($product["price"] * $product["numberOrdered"]);
+            return $totalPrice;
+        }
+    }
+    
 }
