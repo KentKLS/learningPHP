@@ -12,4 +12,3 @@ $path = "test.com";
 include 'footer.php';
 ?>
 
-</bod

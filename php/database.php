@@ -9,26 +9,39 @@ try {
 }
 
 // 1
-$selectCustomerThatOrderedToday = $db->prepare(
-        "SELECT customer_id
+function getCustomerThatOrderedToday($db)
+{
+        $selectCustomerThatOrderedToday = $db->prepare(
+                "SELECT customer_id
         FROM customers
         INNER JOIN orders on customers_customer_id = customer_id
         WHERE CAST(order_date as DATE) = CURDATE()"
-);
+        );
+
+        $selectCustomerThatOrderedToday->execute;
+        $customerThatOrderedToday = $selectCustomerThatOrderedToday->fetchAll($mode = PDO::FETCH_ASSOC);
+        return $customerThatOrderedToday;
 
 
+}
 
 // 2
-$selectStockValue = $db->prepare(
-        "SELECT product_name,
+function getStockValue($db)
+{
+        $selectStockValue = $db->prepare(
+                "SELECT product_name,
         SUM(product_price*product_quantity_available)
         FROM products
         GROUP BY product_name
         ORDER BY product_id"
-);
+        );
 
+        $selectStockValue->execute();
+        $stockValue = $selectStockValue->execute();
+        return $stockValue;
+}
 // 3
-function createCommandListWithException($exception, $db)
+function getCommandListWithException($exception, $db)
 {
         $selectCommandListWithException = $db->prepare(
                 "SELECT *
@@ -38,36 +51,41 @@ function createCommandListWithException($exception, $db)
                 WHERE product_id != $exception"
         );
         $selectCommandListWithException->execute();
-        $commandListWithException = $selectCommandListWithException->fetchAll();
+        $commandListWithException = $selectCommandListWithException->fetchAll($mode = PDO::FETCH_ASSOC);
         return $commandListWithException;
 };
 
 // 4
-$selectCategoryListIfProductIsAvailable = $db->prepare(
-        "SELECT *
+function getCategoryListIfProductIsAvailable($db)
+{
+        $selectCategoryListIfProductIsAvailable = $db->prepare(
+                "SELECT *
         FROM categories
         INNER JOIN products ON category_id = categories_category_id
         WHERE product_availability = TRUE"
-);
+        );
 
-$selectCategoryListIfProductIsAvailable->execute();
+        $selectCategoryListIfProductIsAvailable->execute();
 
-$categoryListIfProductIsAvailable = $selectCategoryListIfProductIsAvailable->fetchAll();
-
+        $categoryListIfProductIsAvailable = $selectCategoryListIfProductIsAvailable->fetchAll($mode = PDO::FETCH_ASSOC);
+        return $categoryListIfProductIsAvailable;
+}
 //5 
-
-$selectCategoryListIfAtleastOneProductIsAvailable = $db->prepare(
-        "SELECT *
+function getCategoryListIfAtleastOneProductIsAvailable($db)
+{
+        $selectCategoryListIfAtleastOneProductIsAvailable = $db->prepare(
+                "SELECT *
         FROM categories
         INNER JOIN products ON category_id = categories_category_id
         GROUP BY categories_category_id
         HAVING MIN(product_availability) = 1"
-);
+        );
 
-$selectCategoryListIfAtleastOneProductIsAvailable->execute();
+        $selectCategoryListIfAtleastOneProductIsAvailable->execute();
 
-$categoryListIfAtleastOneProductIsAvailable = $selectCategoryListIfAtleastOneProductIsAvailable->fetchAll();
-
+        $categoryListIfAtleastOneProductIsAvailable = $selectCategoryListIfAtleastOneProductIsAvailable->fetchAll($mode = PDO::FETCH_ASSOC);
+        return $categoryListIfAtleastOneProductIsAvailable;
+}
 //6 
 
 function deleteProduct($id, $db)
@@ -115,27 +133,27 @@ function getOrdersList($db)
 }
 
 function insertNewOrderAndReturnOrderID($db, $totalPrice)
-{       
+{
         $currDate = date('Y-m-d H:i:s');
-        
+
         $randomNum = random_int(0000, 9999);
         $ordersList = getOrdersList($db);
         foreach ($ordersList as $order) {
                 if ($order["order_number"] == "NO $randomNum") {
                         continue;
-                } else {                        
+                } else {
                         $newOrder = $db->prepare(
-                               " INSERT INTO orders ( `order_number`, `order_date`, `order_cost`, `customers_customer_id`) VALUES
+                                " INSERT INTO orders ( `order_number`, `order_date`, `order_cost`, `customers_customer_id`) VALUES
                                ('NO $randomNum' , '$currDate' , $totalPrice , 1 );"
-                        );                        
+                        );
                 }
         }
-        $newOrder->execute();      
+        $newOrder->execute();
         return $db->lastInsertID();
 }
 
-function insertNewOrder_product($db,$quantity, $productID, $orderID)
-{        
+function insertNewOrder_product($db, $quantity, $productID, $orderID)
+{
 
         $newOrder_product = $db->prepare(
                 "INSERT INTO order_product ( `order_product_quantity`, `products_product_id`, `orders_order_id`) VALUES
