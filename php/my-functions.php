@@ -1,5 +1,6 @@
 <?php
-include "./database.php";
+include "./database/database.php";
+
 
 function formatPrice($price)
 {
@@ -86,13 +87,35 @@ function emptyCart($session)
     return $session;
 }
 
-function calculTotalPrice($productsArray){
+function calculTotalPrice($productsArray)
+{
     $totalPrice = 0;
-    foreach ($productsArray as $product){
-        if ($product["numberOrdered"] != 0){
+    foreach ($productsArray as $product) {
+        if ($product["numberOrdered"] != 0) {
             $totalPrice = $totalPrice + ($product["price"] * $product["numberOrdered"]);
             return $totalPrice;
         }
     }
-    
+}
+
+function displayProduct(Product $product)
+{
+    $beforeVAT = priceExcludingVAT($product->productPrice);
+    echo "
+    <div class='productCard'>
+    <div class='cardImgContainer'>
+        <img src='$product->productImgURL'>
+    </div>
+    <h3>$product->productName</h3>
+    <p>Price before VAT : $beforeVAT </p>
+    <p>Price after VAT : $product->productPrice</p>
+    <p>Weight : $product->productWeight</p>
+    </div>";
+}
+
+function displayCatalog(Catalog $catalog){
+    $productList = $catalog->productList;
+    foreach($productList as $product){
+        displayProduct($product);
+    }
 }

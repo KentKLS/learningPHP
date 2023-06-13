@@ -9,7 +9,7 @@ try {
 }
 
 // 1
-function getCustomerThatOrderedToday($db)
+function getCustomerThatOrderedToday(pdo $db)
 {
         $selectCustomerThatOrderedToday = $db->prepare(
                 "SELECT customer_id
@@ -18,15 +18,13 @@ function getCustomerThatOrderedToday($db)
         WHERE CAST(order_date as DATE) = CURDATE()"
         );
 
-        $selectCustomerThatOrderedToday->execute;
+        $selectCustomerThatOrderedToday->execute();
         $customerThatOrderedToday = $selectCustomerThatOrderedToday->fetchAll($mode = PDO::FETCH_ASSOC);
         return $customerThatOrderedToday;
-
-
 }
 
 // 2
-function getStockValue($db)
+function getStockValue(pdo $db)
 {
         $selectStockValue = $db->prepare(
                 "SELECT product_name,
@@ -41,7 +39,7 @@ function getStockValue($db)
         return $stockValue;
 }
 // 3
-function getCommandListWithException($exception, $db)
+function getCommandListWithException($exception,pdo $db)
 {
         $selectCommandListWithException = $db->prepare(
                 "SELECT *
@@ -56,7 +54,7 @@ function getCommandListWithException($exception, $db)
 };
 
 // 4
-function getCategoryListIfProductIsAvailable($db)
+function getCategoryListIfProductIsAvailable(pdo $db):array
 {
         $selectCategoryListIfProductIsAvailable = $db->prepare(
                 "SELECT *
@@ -71,8 +69,9 @@ function getCategoryListIfProductIsAvailable($db)
         return $categoryListIfProductIsAvailable;
 }
 //5 
-function getCategoryListIfAtleastOneProductIsAvailable($db)
+function getCategoryListIfAtleastOneProductIsAvailable(pdo $db):array
 {
+        
         $selectCategoryListIfAtleastOneProductIsAvailable = $db->prepare(
                 "SELECT *
         FROM categories
@@ -135,7 +134,7 @@ function getOrdersList($db)
 function insertNewOrderAndReturnOrderID($db, $totalPrice)
 {
         $currDate = date('Y-m-d H:i:s');
-
+        
         $randomNum = random_int(0000, 9999);
         $ordersList = getOrdersList($db);
         foreach ($ordersList as $order) {

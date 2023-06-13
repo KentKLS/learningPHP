@@ -1,35 +1,33 @@
 <?php
-class products
+class Product
 {
     public string $productName, $productDescription, $productImgURL;
     public int $productPrice, $productWeight, $productStock;
     public bool $productAvailability;
 
-    function __construct($productName, $productDescription, $productPrice, $productWeight,$productStock)
+    function __construct($productName, $productDescription, $productPrice, $productWeight,$productImgURL, $productStock)
     {
         $this->productName = $productName;
         $this->productDescription = $productDescription;
         $this->productPrice = $productPrice;
         $this->productWeight = $productWeight;
+        $this->productImgURL= $productImgURL;
         $this->productStock = $productStock;
+        $this->productAvailability = $this->getProductAvailability();
     }
 
-    function addProductStock(int $addToStock)
+    public function addProductStock(int $addToStock): void
     {
         $this->productStock += $addToStock;
     }
-    function getProductStock(): int
+    public function getProductStock(): int
     {
         return $this->productStock;
     }
-   
-    function getProductAvailability(): bool
+
+    public function getProductAvailability(): bool
     {
-        if ($this->productStock > 0) {
-           return true;
-        } else {
-           return false;
-        }
-        
+        return $this->productStock > 0;
     }
+    
 }
