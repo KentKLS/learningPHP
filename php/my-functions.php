@@ -100,22 +100,59 @@ function calculTotalPrice($productsArray)
 
 function displayProduct(Product $product)
 {
-    $beforeVAT = priceExcludingVAT($product->productPrice);
+    $beforeVAT = number_format(priceExcludingVAT($product->productPrice), 2);
     echo "
     <div class='productCard'>
     <div class='cardImgContainer'>
         <img src='$product->productImgURL'>
     </div>
     <h3>$product->productName</h3>
-    <p>Price before VAT : $beforeVAT </p>
-    <p>Price after VAT : $product->productPrice</p>
-    <p>Weight : $product->productWeight</p>
+    <p>Price before VAT : $beforeVAT €</p>
+    <p>Price after VAT : $product->productPrice €</p>
+    <p>Weight : $product->productWeight g</p>
     </div>";
 }
 
-function displayCatalog(Catalog $catalog){
+function displayCatalog(Catalog $catalog)
+{
     $productList = $catalog->productList;
-    foreach($productList as $product){
+    foreach ($productList as $product) {
         displayProduct($product);
+    }
+}
+
+function displayCart(Cart $cart)
+{
+    $db = new PDO('mysql:host=localhost;dbname=new_e-commerce;charset=utf8', 'Quentin', '');
+    $cartArray = $cart->getCart();
+
+    
+
+    foreach ($cartArray as $productId => $quantity) {
+        $product= getProduct($db,$productId);
+
+        $productObject = new Product(
+            $product['product_name'],
+            $product['product_description'],
+            $product['product_price'],
+            $product['product_weight'],
+            $product['product_imgURL'],
+            $product['product_quantity_available'],
+            $product['is_used'] );
+
+        $totalPricePerLine = $quantity * $productObject->productPrice;
+        echo "    
+    <tr>
+        <td> $productObject->productName </td>
+        <td> $productObject->productPrice </td>
+        <td>
+        <input class='numberInput' max='99' type='number' name='numberOrdered[]' min='0' value='$quantity'>
+        </td>
+        <td> $totalPricePerLine </td>
+        <td>
+            <input type='hidden' name='product[]' value='$productObject->productName'>
+        </td>
+    </tr>
+    ";
     }
 }
