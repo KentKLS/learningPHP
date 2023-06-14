@@ -8,6 +8,17 @@ try {
         die('Erreur : ' . $e->getMessage());
 }
 
+function getProduct(pdo $db, int $productID){
+        $getProduct = $db->prepare( 
+        "SELECT *
+        FROM products
+        WHERE product_id = $productID
+        ");
+        $getProduct->execute();
+        $product = $getProduct->fetchAll(PDO::FETCH_ASSOC);
+        return $product; 
+}
+
 // 1
 function getCustomerThatOrderedToday(pdo $db)
 {
@@ -35,11 +46,11 @@ function getStockValue(pdo $db)
         );
 
         $selectStockValue->execute();
-        $stockValue = $selectStockValue->execute();
+        $stockValue = $selectStockValue->fetchAll($mode = PDO::FETCH_ASSOC);
         return $stockValue;
 }
 // 3
-function getCommandListWithException($exception,pdo $db)
+function getCommandListWithException($exception, pdo $db)
 {
         $selectCommandListWithException = $db->prepare(
                 "SELECT *
@@ -54,7 +65,7 @@ function getCommandListWithException($exception,pdo $db)
 };
 
 // 4
-function getCategoryListIfProductIsAvailable(pdo $db):array
+function getCategoryListIfProductIsAvailable(pdo $db): array
 {
         $selectCategoryListIfProductIsAvailable = $db->prepare(
                 "SELECT *
@@ -69,9 +80,9 @@ function getCategoryListIfProductIsAvailable(pdo $db):array
         return $categoryListIfProductIsAvailable;
 }
 //5 
-function getCategoryListIfAtleastOneProductIsAvailable(pdo $db):array
+function getCategoryListIfAtleastOneProductIsAvailable(pdo $db): array
 {
-        
+
         $selectCategoryListIfAtleastOneProductIsAvailable = $db->prepare(
                 "SELECT *
         FROM categories
@@ -118,6 +129,19 @@ function getProductList($db)
         $productList = $getProductList->fetchAll($mode = PDO::FETCH_ASSOC);
         return $productList;
 }
+function getUsedProductList($db)
+{
+        $getUsedProductList = $db->prepare(
+                "SELECT * 
+                FROM products 
+                LEFT JOIN used_products ON products.product_id = used_products.product_id 
+                ORDER BY products.product_id;"
+        );
+        $getUsedProductList->execute();
+        $usedProductList = $getUsedProductList->fetchAll($mode = PDO::FETCH_ASSOC);
+        return $usedProductList;
+}
+
 
 function getOrdersList($db)
 {
@@ -134,7 +158,7 @@ function getOrdersList($db)
 function insertNewOrderAndReturnOrderID($db, $totalPrice)
 {
         $currDate = date('Y-m-d H:i:s');
-        
+
         $randomNum = random_int(0000, 9999);
         $ordersList = getOrdersList($db);
         foreach ($ordersList as $order) {

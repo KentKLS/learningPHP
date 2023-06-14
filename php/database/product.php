@@ -3,9 +3,9 @@ class Product
 {
     public string $productName, $productDescription, $productImgURL;
     public int $productPrice, $productWeight, $productStock;
-    public bool $productAvailability;
+    public bool $productAvailability,$productIsUsed;
 
-    function __construct($productName, $productDescription, $productPrice, $productWeight,$productImgURL, $productStock)
+    function __construct($productName, $productDescription, $productPrice, $productWeight,$productImgURL, $productStock,$productIsUsed)
     {
         $this->productName = $productName;
         $this->productDescription = $productDescription;
@@ -14,6 +14,7 @@ class Product
         $this->productImgURL= $productImgURL;
         $this->productStock = $productStock;
         $this->productAvailability = $this->getProductAvailability();
+        $this->productIsUsed = $productIsUsed;
     }
 
     public function addProductStock(int $addToStock): void
@@ -29,5 +30,6 @@ class Product
     {
         return $this->productStock > 0;
     }
+    
     
 }
