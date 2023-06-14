@@ -1,17 +1,17 @@
-<?php 
+<?php
 include './my-functions.php';
 include './database/catalogue.php';
 $catalog = new Catalog;
+include './header.php';
+
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php displayCatalog($catalog) ?>
-</body>
-</html>
+<section class="mainContainer">
+    <div class="cardContainer">
+        <?php displayCatalog($catalog) ?>
+
+    </div>
+</section>
+    <?php
+    include './footer.php';
