@@ -7,6 +7,7 @@ include "./header.php";
 
 if (isset($_POST["product"]) && isset($_POST["numberOrdered"])) {
     $_SESSION['cart']->updateCart($_POST["product"], $_POST["numberOrdered"]);
+    
 }
 
 if (isset($_SESSION['cart'])) {
@@ -14,7 +15,7 @@ if (isset($_SESSION['cart'])) {
     $cartProducts = getCartProducts($cart);
 }
 
-if(isset($_POST['deleteProduct'])){    
+if (isset($_POST['deleteProduct'])) {
     $_SESSION['cart']->deleteCart($_POST["product"]);
 }
 
@@ -25,7 +26,7 @@ if(isset($_POST['deleteProduct'])){
 
 
 
-    <?php if (!empty($_SESSION['cart']->cart) ) : ?>
+    <?php if (!empty($_SESSION['cart']->cart)) : ?>
         <div class="tableContainer">
             <table>
                 <tr>
@@ -38,11 +39,13 @@ if(isset($_POST['deleteProduct'])){
                 </tr>
 
                 <?php
-                $totalPrice =displayCart($_SESSION['cart'])
+                $totalPrice = displayCart($_SESSION['cart'])
                 ?>
 
 
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td>Total HT</td>
@@ -52,22 +55,49 @@ if(isset($_POST['deleteProduct'])){
                 <tr>
                     <td></td>
                     <td></td>
-                    <td>TVA</td>
+                    <td></td>
+                    <td></td>
+                    <td>TVA</td>b
                     <td> <?= 20 ?>%</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
                     <td>Total TTC</td>
                     <td><?php formatPrice($totalPrice) ?></td>
                 </tr>
-
             </table>
 
 
 
         </div>
+        <form action="" method="POST">
+         
+            <select name="transporter">
+                <option value="laPoste">La Poste</option>
+                <option value="chronoPost">ChronoPost</option>
+            </select>
+            <button>VALIDER</button>
+        </form>
+        <?php if (isset($_POST["transporter"])) : ?>
+            <table>
+                <tr>
 
+                    <td>TRANSPORT</td>
+                    <td><?php  ?></td>
+
+                </tr>
+                <tr>
+
+                    <td>Total TTC</td>
+                    <td><?php  ?></td>
+
+                </tr>
+
+            </table>
+        <?php endif ?>
 
     <?php else : ?>
 

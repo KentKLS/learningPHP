@@ -2,7 +2,7 @@
 class Cart
 {
 
-    public array $cart;
+    private array $cart;
 
     function __construct()
     {
