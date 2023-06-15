@@ -1,4 +1,6 @@
-
+<?php
+session_start(); 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,13 +40,13 @@
         <div class="rightPart">
             <ul>
                 <li>
-                    <a href="./multidimensional-catalog.php">Our Products</a>
+                    <a href="./catalogueView.php">Our Products</a>
                 </li>
                 <li>
                     <a href="#"> My Account </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="./cartView.php">
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="64.000000pt" height="64.000000pt"
                         viewBox="0 0 64.000000 64.000000" preserveAspectRatio="xMidYMid meet">
 

@@ -98,19 +98,23 @@ function calculTotalPrice($productsArray)
     }
 }
 
-function displayProduct(Product $product)
-{
-    $beforeVAT = number_format(priceExcludingVAT($product->productPrice), 2);
-    echo "
+function displayProduct(Product $product){
+    
+   ?>
+    <form action='' method='POST'>
     <div class='productCard'>
     <div class='cardImgContainer'>
-        <img src='$product->productImgURL'>
+        <img src='<?= $product->productImgURL?>'>
     </div>
-    <h3>$product->productName</h3>
-    <p>Price before VAT : $beforeVAT €</p>
-    <p>Price after VAT : $product->productPrice €</p>
-    <p>Weight : $product->productWeight g</p>
-    </div>";
+    <h3><?= $product->productName?></h3>
+    <p>Price before VAT : <?= formatPrice(priceExcludingVAT($product->productPrice))?></p>
+    <p>Price after VAT : <?= formatPrice($product->productPrice) ?></p>
+    <p>Weight : <?= $product->productWeight?> g</p>
+    <input type='hidden' name='product' value='<?= $product->productId ?>'>    
+    <button>Ajouté au panier</button>
+    </div>
+    </form>
+    <?php
 }
 
 function displayCatalog(Catalog $catalog)
@@ -125,34 +129,49 @@ function displayCart(Cart $cart)
 {
     $db = new PDO('mysql:host=localhost;dbname=new_e-commerce;charset=utf8', 'Quentin', '');
     $cartArray = $cart->getCart();
-
-    
-
+    $orderTotalPrice = 0;
     foreach ($cartArray as $productId => $quantity) {
-        $product= getProduct($db,$productId);
+        $products = getProduct($db, $productId);
+        foreach ($products as $product) {
 
-        $productObject = new Product(
-            $product['product_name'],
-            $product['product_description'],
-            $product['product_price'],
-            $product['product_weight'],
-            $product['product_imgURL'],
-            $product['product_quantity_available'],
-            $product['is_used'] );
-
-        $totalPricePerLine = $quantity * $productObject->productPrice;
-        echo "    
-    <tr>
-        <td> $productObject->productName </td>
-        <td> $productObject->productPrice </td>
-        <td>
-        <input class='numberInput' max='99' type='number' name='numberOrdered[]' min='0' value='$quantity'>
-        </td>
-        <td> $totalPricePerLine </td>
-        <td>
-            <input type='hidden' name='product[]' value='$productObject->productName'>
-        </td>
-    </tr>
-    ";
+            $productObject = new Product(
+                $product['product_id'],
+                $product['product_name'],
+                $product['product_description'],
+                $product['product_price'],
+                $product['product_weight'],
+                $product['product_imgURL'],
+                $product['product_quantity_available'],
+                $product['is_used']
+            );
+            
+            $totalPricePerLine = $quantity * $productObject->productPrice            
+         ?>
+            <tr>
+                <td> <?= $productObject->productName ?></td>
+                <td> <?= formatPrice($productObject->productPrice) ?> </td>
+                <td>
+                    <form action="./cartView.php" method="POST">
+                    <input class='numberInput' max='99' type='number' name='numberOrdered' min='0' value='<?= $quantity?>'>
+                    <input type='hidden' name='product' value='<?=$productObject->productId ?>'>
+                </td>
+                <td>
+                    <button>Change <br> Quantity</button>
+                </form>
+                </td>
+                 <td> <?= formatPrice($totalPricePerLine) ?> </td>
+                <td>
+                   <form action="./cartView.php" method="POST">
+                    <button>Remove <br> Product </button>
+                    <input type="hidden" name="deleteProduct" value ="0">
+                    <input type='hidden' name='product' value='<?=$productObject->productId ?>'>
+                   </form>
+                </td>
+            </tr>
+            
+            <?php
+            $orderTotalPrice += $totalPricePerLine;
+        }
     }
+    return $orderTotalPrice;
 }

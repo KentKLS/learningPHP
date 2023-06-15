@@ -8,15 +8,29 @@ try {
         die('Erreur : ' . $e->getMessage());
 }
 
-function getProduct(pdo $db, int $productID){
-        $getProduct = $db->prepare( 
-        "SELECT *
+function getProduct(pdo $db, int $productID)
+{
+        $getProduct = $db->prepare(
+                "SELECT *
         FROM products
         WHERE product_id = $productID
-        ");
+        "
+        );
         $getProduct->execute();
         $product = $getProduct->fetchAll(PDO::FETCH_ASSOC);
-        return $product; 
+        return $product;
+}
+
+
+
+function getCartProducts(array $cart):array
+{
+        $db = new PDO('mysql:host=localhost;dbname=new_e-commerce;charset=utf8', 'Quentin', '');
+        $cartProducts =[];
+        foreach ($cart as $productID => $quantity) {
+                $cartProducts = getProduct($db, $productID);
+        }
+        return $cartProducts;
 }
 
 // 1

@@ -2,11 +2,12 @@
 class Product
 {
     public string $productName, $productDescription, $productImgURL;
-    public int $productPrice, $productWeight, $productStock;
+    public int $productId,$productPrice, $productWeight, $productStock;
     public bool $productAvailability,$productIsUsed;
 
-    function __construct($productName, $productDescription, $productPrice, $productWeight,$productImgURL, $productStock,$productIsUsed)
+    function __construct($productId,$productName, $productDescription, $productPrice, $productWeight,$productImgURL, $productStock,$productIsUsed)
     {
+        $this->productId = $productId;
         $this->productName = $productName;
         $this->productDescription = $productDescription;
         $this->productPrice = $productPrice;

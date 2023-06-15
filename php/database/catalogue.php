@@ -12,6 +12,7 @@ class Catalog
         $products = getProductList($db);
         foreach ($products as $product) {
             $this->productList[] = new Product(
+                $product['product_id'],
                 $product['product_name'],
                 $product['product_description'],
                 $product['product_price'],
@@ -25,6 +26,7 @@ class Catalog
         foreach ($this->productList as $key => $product) {
             if ($product->productIsUsed >0) {
                 $this->productList[$key] = new UsedProduct(
+                    $product->productId,
                     $product->productName,
                     $product->productDescription,
                     $product->productPrice,

@@ -6,6 +6,7 @@ class UsedProduct extends Product
     public string $carCondition;
 
     function __construct(
+        $productId,
         $productName,
         $productDescription,
         $productPrice,
@@ -17,6 +18,7 @@ class UsedProduct extends Product
         $carCondition
     ) {
         parent::__construct(
+            $productId,
             $productName,
             $productDescription,
             $productPrice,
