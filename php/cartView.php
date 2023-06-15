@@ -19,9 +19,6 @@ if(isset($_POST['deleteProduct'])){
 }
 
 
-// var_dump($_SESSION['cart']->cart);
-
-
 ?>
 
 <div class="mainContainer contentIsCentered isFullPage">
