@@ -13,7 +13,7 @@ if (isset($_POST["product"])) {
     $_SESSION['cart']->addToCart($_POST["product"]);
 }
 
-var_dump( $_SESSION['cart']->cart)
+var_dump( $_SESSION['cart']->getCart())
 ?>
 
 <section class="mainContainer">

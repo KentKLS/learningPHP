@@ -28,7 +28,7 @@ function discountedPrice($price, $discount)
 function priceTransporter($transporter, $weight, $price)
 {
     if ($transporter == "laPoste") {
-        if ($weight < 500) {
+        if ($weight <= 500) {
             $transporterPrice = 500;
         } elseif ($weight > 500 && $weight < 2000) {
             $transporterPrice = $price / 10;
@@ -36,7 +36,7 @@ function priceTransporter($transporter, $weight, $price)
             $transporterPrice = 0;
         }
     } else if ($transporter == "chronoPost") {
-        if ($weight < 500) {
+        if ($weight <= 500) {
             $transporterPrice = 499;
         } elseif ($weight > 500 && $weight < 2000) {
             $transporterPrice = $price / 7;
@@ -98,23 +98,25 @@ function calculTotalPrice($productsArray)
     }
 }
 
-function displayProduct(Product $product){
-    
-   ?>
+function displayProduct(Product $product)
+{
+    if ($product->productStock > 0):
+?>
     <form action='' method='POST'>
-    <div class='productCard'>
-    <div class='cardImgContainer'>
-        <img src='<?= $product->productImgURL?>'>
-    </div>
-    <h3><?= $product->productName?></h3>
-    <p>Price before VAT : <?= formatPrice(priceExcludingVAT($product->productPrice))?></p>
-    <p>Price after VAT : <?= formatPrice($product->productPrice) ?></p>
-    <p>Weight : <?= $product->productWeight?> g</p>
-    <input type='hidden' name='product' value='<?= $product->productId ?>'>    
-    <button>Ajouté au panier</button>
-    </div>
+        <div class='productCard'>
+            <div class='cardImgContainer'>
+                <img src='<?= $product->productImgURL ?>'>
+            </div>
+            <h3><?= $product->productName ?></h3>
+            <p>Price before VAT : <?= formatPrice(priceExcludingVAT($product->productPrice)) ?></p>
+            <p>Price after VAT : <?= formatPrice($product->productPrice) ?></p>
+            <p>Weight : <?= $product->productWeight ?> g</p>
+            <input type='hidden' name='product' value='<?= $product->productId ?>'>
+            <button>Ajouté au panier</button>
+        </div>
     </form>
     <?php
+    endif;
 }
 
 function displayCatalog(Catalog $catalog)
@@ -144,34 +146,67 @@ function displayCart(Cart $cart)
                 $product['product_quantity_available'],
                 $product['is_used']
             );
-            
-            $totalPricePerLine = $quantity * $productObject->productPrice            
-         ?>
+
+            $totalPricePerLine = $quantity * $productObject->productPrice;
+           
+    ?>
             <tr>
                 <td> <?= $productObject->productName ?></td>
                 <td> <?= formatPrice($productObject->productPrice) ?> </td>
                 <td>
                     <form action="./cartView.php" method="POST">
-                    <input class='numberInput' max='99' type='number' name='numberOrdered' min='0' value='<?= $quantity?>'>
-                    <input type='hidden' name='product' value='<?=$productObject->productId ?>'>
+                        <input class='numberInput' max='99' type='number' name='numberOrdered' min='0' value='<?= $quantity ?>'>
+                        <input type='hidden' name='product' value='<?= $productObject->productId ?>'>
                 </td>
                 <td>
-                    <button>Change <br> Quantity</button>
-                </form>
+                    <button>Modify <br> Quantity</button>
+                    </form>
                 </td>
-                 <td> <?= formatPrice($totalPricePerLine) ?> </td>
+                <td> <?= formatPrice($totalPricePerLine) ?> </td>
                 <td>
-                   <form action="./cartView.php" method="POST">
-                    <button>Remove <br> Product </button>
-                    <input type="hidden" name="deleteProduct" value ="0">
-                    <input type='hidden' name='product' value='<?=$productObject->productId ?>'>
-                   </form>
+                    <form action="./cartView.php" method="POST">
+                        <button>Remove <br> Product </button>
+                        <input type="hidden" name="deleteProduct" value="0">
+                        <input type='hidden' name='product' value='<?= $productObject->productId ?>'>
+                    </form>
                 </td>
             </tr>
-            
-            <?php
+
+<?php
+           
             $orderTotalPrice += $totalPricePerLine;
         }
     }
     return $orderTotalPrice;
+}
+
+
+function getCartProductsWeight(array $cartProducts)
+{
+    $weight = 0;
+
+    foreach ($cartProducts as $cartProduct) {
+
+        foreach ($cartProduct as $product) {
+            if (is_array($product)) {
+                $weight += $product['product_weight'] * $cartProduct['quantity'];
+            }
+        }
+    }
+    return $weight;
+}
+
+function getCartProductsPrice(array $cartProducts)
+{
+    $price = 0;
+
+    foreach ($cartProducts as $cartProduct) {
+
+        foreach ($cartProduct as $product) {
+            if (is_array($product)) {
+                $price += $product['product_price'] * $cartProduct['quantity'];
+            }
+        }
+    }
+    return $price;
 }

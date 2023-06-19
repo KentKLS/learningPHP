@@ -28,7 +28,8 @@ function getCartProducts(array $cart):array
         $db = new PDO('mysql:host=localhost;dbname=new_e-commerce;charset=utf8', 'Quentin', '');
         $cartProducts =[];
         foreach ($cart as $productID => $quantity) {
-                $cartProducts = getProduct($db, $productID);
+                $cartProducts[$productID] = getProduct($db, $productID);
+                $cartProducts[$productID]['quantity'] = $quantity; 
         }
         return $cartProducts;
 }
